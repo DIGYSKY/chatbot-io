@@ -1,7 +1,12 @@
 @charset "utf-8";
 
-* {
-  border: red solid 1px;
+// * {
+//   border: red solid 1px;
+// }
+
+body {
+  height: 91vh; /* 100% de la hauteur de la fenêtre */
+  overflow: hidden; /* Empêche le défilement vertical */
 }
 
 ::-webkit-scrollbar {
@@ -13,27 +18,27 @@
 }
 
 .c-second-b {
-  background-color: rgb(77, 77, 77);
+  background-color: rgb(27, 27, 27);
 }
 
 .chat-container {
-display: flex;
-height: 100vh;
+  display: flex;
+  height: 91vh;
 }
 
 .bot-list {
-flex: 0 0 20%;
-background-color: #2e8c40;
-padding: 20px;
+  flex: 0 0 20%;
+  background-color: #2e8c40;
+  padding: 20px;
 }
 
 .bot {
-padding: 10px;
-color: #fff;
-margin-bottom: 10px;
-cursor:default;
-background-color: #000000;
-border-radius: 10px;
+  padding: 10px;
+  color: #fff;
+  margin-bottom: 10px;
+  cursor:default;
+  background-color: #000000;
+  border-radius: 10px;
 }
 
 .bot img {
@@ -42,53 +47,53 @@ border-radius: 10px;
 }
 
 .chat-window {
-flex: 1;
-display: flex;
-flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-messages {
-flex: 1;
-overflow-y: auto;
-padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
 }
 
 .message {
-margin-bottom: 10px;
-padding: 10px;
-border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .received {
-background-color: #e6f2ff;
+  background-color: #e6f2ff;
 }
 
 .sent {
-background-color: #ccffcc;
+  background-color: #ccffcc;
 }
 
 .message-input {
-display: flex;
-padding: 20px;
+  display: flex;
+  padding: 20px;
 }
 
 .message-input input {
-flex: 1;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .message-input button {
-padding: 10px 20px;
-margin-left: 10px;
-border: none;
-background-color: #007bff;
-color: #fff;
-cursor: pointer;
-border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .message-input button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
