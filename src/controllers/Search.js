@@ -16,7 +16,7 @@ const Search = class {
   render() {
     return `
       <div class="container-fluid p-0 m-0">
-        ${viewNav()}, ${viewBots()}
+        ${viewNav()} ${viewBots()}
         <div class="container-fluid row user-list m-0">
           ${viewUsers(this.data)}
       </div>
