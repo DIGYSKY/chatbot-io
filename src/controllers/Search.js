@@ -14,9 +14,9 @@ const Search = class {
 
   render() {
     return `
-      <div class="container">
+      <div class="container-fluid p-0 m-0">
         ${viewNav()}
-        <div class="row user-list">
+        <div class="container-fluid row user-list m-0">
           ${viewUsers(this.data)}
         </div>
       </div>
@@ -66,7 +66,7 @@ const Search = class {
       );
 
       this.el.innerHTML = this.render();
-      this.onKeyPress();
+      // this.onKeyPress();
     });
   }
 };

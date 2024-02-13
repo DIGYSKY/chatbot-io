@@ -1,5 +1,13 @@
 @charset "utf-8";
 
-h1 {
-  color: red;
+::-webkit-scrollbar {
+  display: none;
+}
+
+.c-primary-b {
+  background-color: #2e8c40;
+}
+
+.c-second-b {
+  background-color: rgb(77, 77, 77);
 }
