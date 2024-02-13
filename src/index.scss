@@ -23,15 +23,22 @@ height: 100vh;
 
 .bot-list {
 flex: 0 0 20%;
-background-color: #f0f0f0;
+background-color: #2e8c40;
 padding: 20px;
 }
 
 .bot {
 padding: 10px;
+color: #fff;
 margin-bottom: 10px;
-cursor: pointer;
-background-color: #ddd;
+cursor:default;
+background-color: #000000;
+border-radius: 10px;
+}
+
+.bot img {
+  width: 25%;
+  border-radius: 50%;
 }
 
 .chat-window {
