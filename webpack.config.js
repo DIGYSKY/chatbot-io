@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-  // entry: './src/index.js' if you unuse typescript entry
-  entry: './src/index.ts',
+  entry: './src/index.js', // if you unuse typescript entry
+  // entry: './src/index.ts',
   output: {
     filename: 'src/[name].[fullhash].js',
     path: path.resolve(__dirname, 'dist')
