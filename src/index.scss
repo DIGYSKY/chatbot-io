@@ -15,6 +15,7 @@ body {
 
 .c-primary-b {
   background-color: #2e8c40;
+  box-shadow: 0 0 10px black;
 }
 
 .c-second-b {
@@ -24,12 +25,14 @@ body {
 .chat-container {
   display: flex;
   height: 91vh;
+  
 }
 
 .bot-list {
   flex: 0 0 20%;
   background-color: #2e8c40;
   padding: 20px;
+  
 }
 
 .bot {
