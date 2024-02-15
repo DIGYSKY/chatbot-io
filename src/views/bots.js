@@ -1,9 +1,9 @@
 export default () => (`
 <div class="chat-container p-0">
 <div class="bot-list">
-    <!-- Liste des bots -->
-    <div class="bot"><img src="https://i-dj.unimedias.fr/2023/09/12/dj115chatonth-6500273acbf37.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=680">  Nom du premier bot</div>
-    <div class="bot"><img src="https://i-dj.unimedias.fr/2023/09/12/dj115chatonth-6500273acbf37.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=680">  Nom du second bot</div>
-    <div class="bot"><img src="https://i-dj.unimedias.fr/2023/09/12/dj115chatonth-6500273acbf37.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=max&w=680">Nom du troisième bot</div>
+    <h3>Nos bots</h3>
+    <div class="bot"><img src="https://e7.pngegg.com/pngimages/1001/63/png-clipart-internet-bot-computer-icons-chatbot-sticker-electronics-face-thumbnail.png"> |  Nom du premier bot</div>
+    <div class="bot"><img src="https://e7.pngegg.com/pngimages/1001/63/png-clipart-internet-bot-computer-icons-chatbot-sticker-electronics-face-thumbnail.png"> |  Nom du second bot</div>
+    <div class="bot"><img src="https://e7.pngegg.com/pngimages/1001/63/png-clipart-internet-bot-computer-icons-chatbot-sticker-electronics-face-thumbnail.png"> |  Nom du troisième bot</div>
 </div>
 `);
