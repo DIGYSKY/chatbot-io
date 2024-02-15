@@ -19,7 +19,7 @@ const Search = class {
         ${viewNav()}
       </div>
       <div class="row user-list m-0 p-0">
-        ${viewBots()} ${viewUsers(this.data)}
+        ${viewBots(this.bot)} ${viewUsers()}
       </div>
     `;
   }
