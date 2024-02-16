@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Orbitron:wght@400..900&display=swap');
+
+:root {
+  /* color */
+  --primary: #f7f7f7;
+  --secondary: #f4f4f4;
+  --tertiary: #752696;
+  
+  /* size navbar */
+  --width-nav: 100%;
+  --height-nav: 8%;
+
+  /* size bot-list */
+  --width-bot-list: 22%;
+  --height-bot-list: 92%;
+
+  /* size message box */
+  --width-message-box: 78%;
+  --height-message-box: 92%;
+
+  /* size message */
+  --width-message: 100%;
+  --height-message: 92%;
+
+  /* size imput user message */
+  --width-imput-message: 100%;
+  --height-imput-message: 8%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  /* user-select: none; */
+}
+
+body {
+  background-color: var(--secondary);
+}
+
+.nav h1 {
+  margin-top: 10px;
+  margin-left: 0.5em;
+  color: var(--tertiary);
+  font-family: "Anta", sans-serif;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: var(--primary);
+  min-width: var(--width-nav);
+  max-width: var(--width-nav);
+  min-height: var(--height-nav);
+  max-height: var(--height-nav);
+  box-shadow: -5px 0px 26px 1px rgba(0, 0, 0, 0.23);
+  z-index: 7;
+  overflow: hidden;
+}
+
+.nav img {
+  margin-top: -4px;
+}
+
+.chatbot {
+  display: flex;
+  flex-direction: row;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--primary);
+  position: absolute;
+  bottom: 0px;
+  padding: 1em;
+  box-shadow: -5px 0px 26px 1px rgba(0, 0, 0, 0.23);
+  min-width: var(--width-bot-list);
+  max-width: var(--width-bot-list);
+  min-height: var(--height-bot-list);
+  max-height: var(--height-bot-list);
+  overflow: scroll;
+  z-index: 5;
+}
+
+.button-bot {
+  font-family: "Fredoka", sans-serif;
+  border: none;
+  background-color: var(--primary);
+  border-radius: 1em;
+  padding: 0.8em;
+}
+
+.button-bot h5 {
+  color: var(--tertiary);
+}
+
+.button-bot img {
+  border-radius: 2em;
+}
+
+.button-bot:hover {
+  background-color: #bfbfbf;
+}
+
+.message-box{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  min-width: var(--width-message-box);
+  max-width: var(--width-message-box);
+  min-height: var(--height-message-box);
+  max-height: var(--height-message-box);
+  overflow: hidden;
+  z-index: 5;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  position: absolute;
+  bottom: var(--height-imput-message);
+  right: 0px;
+  min-width: var(--width-message);
+  max-width: var(--width-message);
+  min-height: var(--height-message);
+  max-height: var(--height-message);
+  overflow: scroll;
+  z-index: 4;
+}
+
+.bot-message {
+  text-align: left;
+  align-self: flex-start;
+  background-color: #bfbfbf;
+  border-radius: 1em;
+  max-width: 70%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+.user-message {
+  text-align: left;
+  align-self: flex-end;
+  background-color: #bfbfbf;
+  border-radius: 1em;
+  max-width: 70%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+
+}
+
+.imput-message {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--width-imput-message);
+  max-width: var(--width-imput-message);
+  min-height: var(--height-imput-message);
+  max-height: var(--height-imput-message);
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+  overflow: hidden;
+}
+
+.imput-message form {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.imput-message form input[type=text] {
+  width: 80%;
+  height: 80%;
+  font-size: 1.2em;
+  padding: 0.5em;
+  margin-right: 1em;
+  border-radius: 0.5em;
+}
+
+.imput-message form input[type=submit] {
+  font-size: 1.2em;
+  padding: 0.5em;
+  cursor: pointer;
+  border-radius: 0.5em;
+  background-color: var(--tertiary);
+  color: var(--secondary);
+}
