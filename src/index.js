@@ -1,12 +1,12 @@
-import Search from './controllers/Search';
+import Bot from './controllers/Bot';
 
 import Router from './Router';
 
 import './index.scss';
 
 const routes = [{
-  url: '/search',
-  controller: Search
+  url: '/chatbot',
+  controller: Bot
 }];
 
 new Router(routes);
