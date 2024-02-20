@@ -1,4 +1,4 @@
-export default () => (`
+export default (bot) => (`
 <button class="button-bot mb-3">
 <div>
   <div class="row g-0 align-items-center">
@@ -9,9 +9,9 @@ export default () => (`
     </div>
     <div class="col-md-8">
       <div class="card-body m-3">
-        <h5 class="card-title">Chatbot | Bot 1</h5>
-        <p class="card-text">Description du bot</p>
-        <p class="text-success">Bot online</p>
+        <h5 class="card-title">Chatbot | ${bot.title}</h5>
+        <p class="card-text">${bot.description}</p>
+        <p class="${bot.statue ? 'text-success' : 'text-danger'}">${bot.statue ? 'Bot online' : 'Bot offline'}</p>
       </div>
     </div>
   </div>

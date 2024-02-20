@@ -7,7 +7,23 @@ import viewBots from '../views/bots';
 const Bot = class {
   constructor() {
     this.el = document.querySelector('#root');
-
+    this.botList = [{
+      title: 'Bot I',
+      description: 'description du chatbot',
+      statue: true
+    }, {
+      title: 'Bot II',
+      description: 'description du chatbot',
+      statue: false
+    }, {
+      title: 'Bot III',
+      description: 'description du chatbot',
+      statue: true
+    }, {
+      title: 'Bot IV',
+      description: 'description du chatbot',
+      statue: true
+    }];
     this.run();
   }
 
@@ -16,7 +32,7 @@ const Bot = class {
         ${viewNav()}
         <div class="chatbot">
           <div class="chat-list">
-            ${viewBots(this.bot)} 
+            ${this.botList.map((bot) => viewBots(bot)).join('')}
           </div>
           ${viewEntry()}
         </div>
