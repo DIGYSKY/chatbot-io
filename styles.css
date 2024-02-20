@@ -101,7 +101,7 @@ body {
   border: none;
   background-color: var(--primary);
   border-radius: 1em;
-  padding: 0.8em;
+  padding: 0;
 }
 
 .button-bot h5 {

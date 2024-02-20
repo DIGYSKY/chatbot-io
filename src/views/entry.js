@@ -1,13 +1,21 @@
 export default () => (`
-<div class="chat-window">
-<div class="chat-messages">
-    <!-- Messages échangés -->
-    <div class="message received">Message reçu</div>
-    <div class="message sent">Message envoyé</div>
+<div class="message-box">
+<div class="message">
+  <div class="bot-message">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis officia neque iure, esse temporibus modi nulla consequatur, suscipit similique fugiat, exercitationem mollitia. Eos, quaerat id possimus assumenda fugiat excepturi repellendus.</p>
+  </div>
+  <div class="user-message">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, tempora?</p>
+  </div>
+  <div class="bot-message">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis officia neque iure, esse temporibus modi nulla consequatur, suscipit similique fugiat, exercitationem mollitia. Eos, quaerat id possimus assumenda fugiat excepturi repellendus.</p>
+  </div>
 </div>
-<div class="message-input">
-    <input type="text" placeholder="Entrez votre message...">
-    <button>Envoyer</button>
+<div class="imput-message">
+  <form action="">
+    <input type="text" name="message-user" id="message-user">
+    <input type="submit" value="Envoyer">
+  </form>
 </div>
 </div>
 `);
