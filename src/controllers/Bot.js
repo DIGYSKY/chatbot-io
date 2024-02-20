@@ -8,23 +8,44 @@ const Bot = class {
   constructor() {
     this.el = document.querySelector('#root');
     this.botList = [{
+      index: 1,
       title: 'Bot I',
       description: 'description du chatbot',
       statue: true
     }, {
+      index: 2,
       title: 'Bot II',
       description: 'description du chatbot',
       statue: false
     }, {
+      index: 3,
       title: 'Bot III',
       description: 'description du chatbot',
       statue: true
     }, {
+      index: 4,
       title: 'Bot IV',
       description: 'description du chatbot',
       statue: true
     }];
+    this.bot = 1;
     this.run();
+  }
+
+  scrollBottom() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const messageDiv = document.querySelector('.message');
+      messageDiv.scrollTop = messageDiv.scrollHeight;
+    });
+  }
+
+  getTime() {
+    const dateDebut = new Date('2000-01-01');
+    const dateActuelle = new Date();
+    const differenceEnMillisecondes = dateActuelle.getTime() - dateDebut.getTime();
+    const secondesDepuis2000 = Math.floor(differenceEnMillisecondes / 1000);
+
+    return secondesDepuis2000;
   }
 
   render() {
@@ -41,6 +62,7 @@ const Bot = class {
 
   run() {
     this.el.innerHTML = this.render();
+    this.scrollBottom();
   }
 };
 

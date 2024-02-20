@@ -12,7 +12,7 @@ export default () => (`
   </div>
 </div>
 <div class="imput-message">
-  <form action="">
+  <form action="" id="imput-user">
     <input type="text" name="message-user" id="message-user">
     <input type="submit" value="Envoyer">
   </form>
