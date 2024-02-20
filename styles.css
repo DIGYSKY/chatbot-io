@@ -144,24 +144,24 @@ body {
 }
 
 .bot-message {
-  text-align: left;
   align-self: flex-start;
   background-color: #bfbfbf;
-  border-radius: 1em;
-  max-width: 70%;
-  padding: 0.5em;
-  margin-bottom: 1em;
 }
 
 .user-message {
-  text-align: left;
   align-self: flex-end;
-  background-color: #bfbfbf;
+  background-color: var(--tertiary);
+  color: white;
+}
+
+.bot-message, .user-message {
+  text-align: left;
+  box-shadow: 10px 10px 123px -70px rgba(0,0,0,0.55);
+  margin-bottom: 1.5em;
   border-radius: 1em;
+  font-size: 1.2em;
   max-width: 70%;
   padding: 0.5em;
-  margin-bottom: 1em;
-
 }
 
 .imput-message {
