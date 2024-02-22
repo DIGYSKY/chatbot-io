@@ -29,12 +29,6 @@ const Bot = class {
       description: 'description du chatbot',
       statut: true
     }];
-    this.messageList = [{
-      index: '0 : user, 1, 2, 3... : bot',
-      date: '',
-      contents: ''
-    }];
-    this.messageInput = {};
     this.run();
   }
 
@@ -43,6 +37,32 @@ const Bot = class {
       const messageDiv = document.querySelector('.message');
       messageDiv.scrollTop = messageDiv.scrollHeight;
     });
+  }
+
+  inputMessage() {
+    const form = document.getElementById('imput-user');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const messageValue = document.getElementById('message-user').value;
+
+      this.addMessage(0, messageValue);
+      const messageDiv = document.querySelector('.message');
+      messageDiv.scrollTop = messageDiv.scrollHeight;
+    });
+  }
+
+  addMessage(who, message) {
+    const messageBox = document.getElementById('message-box');
+
+    if (who === 0) {
+      messageBox.innerHTML += `
+        <div class="user-message">
+          <p>${message}</p>
+        </div>
+      `;
+    }
   }
 
   getTime() {
@@ -70,6 +90,7 @@ const Bot = class {
   run() {
     this.el.innerHTML = this.render();
     this.scrollBottom();
+    this.inputMessage();
   }
 };
 
