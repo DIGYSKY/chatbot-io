@@ -1,5 +1,6 @@
 // import axios from 'axios';
 
+import viewMessage from '../views/message';
 import viewEntry from '../views/entry';
 import viewNav from '../views/nav';
 import viewBots from '../views/bots';
@@ -28,7 +29,12 @@ const Bot = class {
       description: 'description du chatbot',
       statut: true
     }];
-    this.bot = 1;
+    this.messageList = [{
+      index: '0 : user, 1, 2, 3... : bot',
+      date: '',
+      contents: ''
+    }];
+    this.messageInput = {};
     this.run();
   }
 
@@ -55,6 +61,7 @@ const Bot = class {
           <div class="chat-list">
             ${this.botList.map((bot) => viewBots(bot)).join('')}
           </div>
+          ${viewMessage()}
           ${viewEntry()}
         </div>
     `;
