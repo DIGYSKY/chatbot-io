@@ -11,22 +11,22 @@ const Bot = class {
       index: 1,
       title: 'Bot I',
       description: 'description du chatbot',
-      statue: true
+      statut: true
     }, {
       index: 2,
       title: 'Bot II',
       description: 'description du chatbot',
-      statue: false
+      statut: false
     }, {
       index: 3,
       title: 'Bot III',
       description: 'description du chatbot',
-      statue: true
+      statut: true
     }, {
       index: 4,
       title: 'Bot IV',
       description: 'description du chatbot',
-      statue: true
+      statut: true
     }];
     this.bot = 1;
     this.run();

@@ -170,7 +170,7 @@ body {
   padding: 0.5em;
 }
 
-.imput-message {
+.input-message {
   display: flex;
   flex-direction: row;
   position: absolute;
@@ -186,13 +186,13 @@ body {
   overflow: hidden;
 }
 
-.imput-message form {
+.input-message form {
   text-align: center;
   width: 100%;
   margin-bottom: 1em;
 }
 
-.imput-message form input[type=text] {
+.input-message form input[type=text] {
   width: 80%;
   height: 80%;
   font-size: 1.2em;
@@ -201,7 +201,7 @@ body {
   border-radius: 0.5em;
 }
 
-.imput-message form input[type=submit] {
+.input-message form input[type=submit] {
   font-size: 1.2em;
   padding: 0.5em;
   cursor: pointer;

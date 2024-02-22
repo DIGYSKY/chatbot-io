@@ -11,7 +11,7 @@ export default (bot) => (`
       <div class="card-body m-3">
         <h5 class="card-title">Chatbot | ${bot.title}</h5>
         <p class="card-text">${bot.description}</p>
-        <p class="${bot.statue ? 'text-success' : 'text-danger'}">${bot.statue ? 'Bot online' : 'Bot offline'}</p>
+        <p class="${bot.statut ? 'text-success' : 'text-danger'}">${bot.statut ? 'Bot online' : 'Bot offline'}</p>
       </div>
     </div>
   </div>
