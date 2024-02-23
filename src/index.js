@@ -1,12 +1,10 @@
-import Bot from './controllers/Bot';
-
+import Chat from './controllers/Chat';
 import Router from './Router';
-
 import './index.scss';
 
 const routes = [{
   url: '/',
-  controller: Bot
+  controller: Chat
 }];
 
 new Router(routes);
