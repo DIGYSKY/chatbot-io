@@ -1,3 +1,4 @@
+import botAction from '../data/action';
 import botList from '../data/botsList';
 import viewMessage from '../views/message';
 import viewEntry from '../views/entry';
@@ -8,6 +9,7 @@ import viewPopup from '../views/popup';
 const Chat = class {
   constructor() {
     this.el = document.querySelector('#root');
+    this.botAction = botAction;
     this.botList = botList;
     this.run();
   }
@@ -33,6 +35,7 @@ const Chat = class {
         elMessageInput.value = '';
         this.addMessage(0, messageValue);
         // this.saveMessage(0, messageValue);
+        this.botRespons(messageValue);
         elMessageBox.scrollTop = elMessageBox.scrollHeight;
       }
     });
@@ -40,19 +43,27 @@ const Chat = class {
 
   addMessage(who, message) {
     const messageBox = document.getElementById('message-box');
+    const newMessage = (`
+    <div class="${who === 0 ? 'user-message' : 'bot-message'}">
+      <p>${message}</p>
+    </div>
+  `);
+    messageBox.innerHTML += newMessage;
+  }
 
-    if (who === 0) {
-      messageBox.innerHTML += `
-        <div class="user-message">
-          <p>${message}</p>
-        </div>
-      `;
-    } else if (who === 1) {
-      messageBox.innerHTML += `
-        <div class="bot-message">
-          <p>${message}</p>
-        </div>
-      `;
+  botRespons(message) {
+    let execute = false;
+    this.botAction.forEach((actionList) => {
+      actionList.keyWord.forEach((keyWordList) => {
+        if (keyWordList === message) {
+          this.addMessage(actionList.who, actionList.action());
+          execute = true;
+        }
+      });
+    });
+
+    if (!execute) {
+      this.addMessage('default', "je n'ai pas compris");
     }
   }
 
