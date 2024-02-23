@@ -167,9 +167,15 @@ body {
   border-radius: 1em;
   font-size: 1.2em;
   max-width: 70%;
-  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.4em;
+  padding-bottom: 0.6em;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  p {
+    margin: 0;
+  }
 }
 
 .input-message {
