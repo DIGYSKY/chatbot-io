@@ -3,6 +3,7 @@ import viewMessage from '../views/message';
 import viewEntry from '../views/entry';
 import viewNav from '../views/nav';
 import viewBots from '../views/bots';
+import viewPopup from '../views/popup';
 
 const Chat = class {
   constructor() {
@@ -55,6 +56,20 @@ const Chat = class {
     }
   }
 
+  showBotPopup() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('.button-bot');
+      const popupContent = document.querySelector('.popup');
+      const closeButton = document.querySelector('.close-button');
+      button.addEventListener('click', () => {
+        popupContent.style.display = 'block';
+      });
+      closeButton.addEventListener('click', () => {
+        popupContent.style.display = 'none';
+      });
+    });
+  }
+
   render() {
     return (`
         ${viewNav()}
@@ -64,6 +79,7 @@ const Chat = class {
           </div>
           ${viewMessage()}
           ${viewEntry()}
+          ${viewPopup()}
         </div>
     `);
   }
@@ -72,6 +88,7 @@ const Chat = class {
     this.el.innerHTML = this.render();
     this.scrollBottom();
     this.inputMessage();
+    this.showBotPopup();
   }
 };
 
