@@ -1,5 +1,6 @@
 // import axios from 'axios';
 
+import Message from './Message';
 import viewMessage from '../views/message';
 import viewEntry from '../views/entry';
 import viewNav from '../views/nav';
@@ -39,41 +40,6 @@ const Bot = class {
     });
   }
 
-  inputMessage() {
-    const form = document.getElementById('imput-user');
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const messageValue = document.getElementById('message-user').value;
-
-      this.addMessage(0, messageValue);
-      const messageDiv = document.querySelector('.message');
-      messageDiv.scrollTop = messageDiv.scrollHeight;
-    });
-  }
-
-  addMessage(who, message) {
-    const messageBox = document.getElementById('message-box');
-
-    if (who === 0) {
-      messageBox.innerHTML += `
-        <div class="user-message">
-          <p>${message}</p>
-        </div>
-      `;
-    }
-  }
-
-  getTime() {
-    const dateDebut = new Date('2000-01-01');
-    const dateActuelle = new Date();
-    const differenceEnMillisecondes = dateActuelle.getTime() - dateDebut.getTime();
-    const secondesDepuis2000 = Math.floor(differenceEnMillisecondes / 1000);
-
-    return secondesDepuis2000;
-  }
-
   render() {
     return `
         ${viewNav()}
@@ -90,7 +56,7 @@ const Bot = class {
   run() {
     this.el.innerHTML = this.render();
     this.scrollBottom();
-    this.inputMessage();
+    new Message();
   }
 };
 
