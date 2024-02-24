@@ -35,7 +35,7 @@ const Chat = class {
         elMessageInput.value = '';
         this.addMessage(0, messageValue);
         // this.saveMessage(0, messageValue);
-        this.botRespons(messageValue);
+        this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
         elMessageBox.scrollTop = elMessageBox.scrollHeight;
       }
     });
@@ -51,19 +51,70 @@ const Chat = class {
     messageBox.innerHTML += newMessage;
   }
 
-  botRespons(message) {
-    let execute = false;
-    this.botAction.forEach((actionList) => {
-      actionList.keyWord.forEach((keyWordList) => {
-        if (keyWordList === message) {
-          this.addMessage(actionList.who, actionList.action());
-          execute = true;
-        }
+  botRespons(wordList) {
+    const matchWord = [];
+    const wordListSplit = wordList.split(' ');
+    this.botAction.forEach((action) => {
+      action.keyWord.forEach((wordB) => {
+        wordListSplit.forEach((wordA) => {
+          if (wordA === wordB) {
+            matchWord.push({ word: wordB, perc: 200 });
+          } else if (action.accordCocordence) {
+            const distWordA = wordA.length;
+            const distWordB = wordB.length;
+            let matchLetters = 0;
+            let matchErrors = 0;
+
+            for (let i = 0; i < distWordA; i += 1) {
+              for (let j = 0; j < distWordB; j += 1) {
+                if (wordA[i] === wordB[j]
+                  && wordA[i] !== ' '
+                  && ((wordA[i + 1] === wordB[j + 1] && wordA[i + 2] === wordB[j + 2])
+                  || (wordA[i - 1] === wordB[j - 1] && wordA[i - 2] === wordB[j - 2]))) {
+                  matchLetters += 1;
+                  break;
+                } else if (matchErrors <= distWordB && wordA[i] !== ' ') {
+                  matchErrors += 0.1;
+                }
+              }
+            }
+
+            const percentageMatch = (matchLetters / distWordB) * 100;
+            const percentageErrors = (matchErrors / distWordB) * 100;
+
+            if (percentageMatch > percentageErrors) {
+              matchWord.push({
+                word: wordB,
+                perc: action.name === 'Insultes' ? 300 : percentageMatch
+              });
+            }
+          }
+        });
       });
     });
 
-    if (!execute) {
-      this.addMessage('default', "je n'ai pas compris");
+    if (matchWord.length) {
+      let maxMatch = 0;
+      let maxMatchWord = '';
+
+      matchWord.forEach((wordObj) => {
+        if (wordObj.perc > maxMatch) {
+          maxMatch = wordObj.perc;
+          maxMatchWord = wordObj.word;
+        }
+      });
+
+      this.botAction.forEach((actionList) => {
+        actionList.keyWord.forEach((wordAction) => {
+          if (maxMatchWord === wordAction) {
+            this.addMessage(actionList.who, actionList.action());
+          }
+        });
+      });
+    }
+
+    if (!matchWord.length) {
+      this.addMessage('general', "Je n'ai pas compris !");
     }
   }
 
