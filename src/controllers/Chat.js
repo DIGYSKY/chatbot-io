@@ -57,11 +57,13 @@ const Chat = class {
     this.botAction.forEach((action) => {
       action.keyWord.forEach((wordB) => {
         wordListSplit.forEach((wordA) => {
+          const distWordA = wordA.length;
+          const distWordB = wordB.length;
+          const diffWord = Math.abs(distWordA - distWordB);
+
           if (wordA === wordB) {
             matchWord.push({ word: wordB, perc: 200 });
-          } else if (action.accordCocordence) {
-            const distWordA = wordA.length;
-            const distWordB = wordB.length;
+          } else if (action.accordCocordence && diffWord <= 3) {
             let matchLetters = 0;
             let matchErrors = 0;
 
@@ -82,10 +84,10 @@ const Chat = class {
             const percentageMatch = (matchLetters / distWordB) * 100;
             const percentageErrors = (matchErrors / distWordB) * 100;
 
-            if (percentageMatch > percentageErrors) {
+            if (percentageMatch > percentageErrors && percentageMatch >= 30) {
               matchWord.push({
                 word: wordB,
-                perc: action.name === 'Insultes' ? 300 : percentageMatch
+                perc: percentageMatch
               });
             }
           }
