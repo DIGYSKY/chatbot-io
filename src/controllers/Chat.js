@@ -1,3 +1,4 @@
+// import axios from 'axios';
 import botAction from '../data/action';
 import botList from '../data/botsList';
 import viewMessage from '../views/message';
@@ -43,12 +44,48 @@ const Chat = class {
 
   addMessage(who, message) {
     const messageBox = document.getElementById('message-box');
+    const bot = [];
+    if (who !== 0 && who !== 'all') {
+      this.botList.forEach((thisBot) => {
+        if (thisBot.index === who) {
+          bot.push(thisBot);
+        }
+      });
+    } else if (who === 'all') {
+      bot.push({
+        title: 'Tout le monde',
+        img: 'hello'
+      });
+    }
+
     const newMessage = (`
+    <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
+      ${who !== 0 ? `<p>${bot[0].title}</p>` : '<p>User</p>'}
+      ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
+    </div>
     <div class="${who === 0 ? 'user-message' : 'bot-message'}">
       <p>${message}</p>
     </div>
+    <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
+      <p>${this.getDate()}</p>
+    </div>
   `);
+
     messageBox.innerHTML += newMessage;
+  }
+
+  getDate() {
+    const date = new Date();
+    const joursSemaine = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+    const jourSemaineAbbr = joursSemaine[date.getDay()];
+    const jour = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
+    const mois = ((date.getMonth() + 1) < 10) ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+    const annee = date.getFullYear();
+    const heures = (date.getHours() < 10) ? `0${date.getHours()}` : date.getHours();
+    const minutes = (date.getMinutes() < 10) ? `0${date.getMinutes()}` : date.getMinutes();
+    const displayDate = `${jourSemaineAbbr}. ${heures}:${minutes} ${jour}/${mois}/${annee}`;
+
+    return displayDate;
   }
 
   botRespons(wordList) {
@@ -116,7 +153,7 @@ const Chat = class {
     }
 
     if (!matchWord.length) {
-      this.addMessage('general', "Je n'ai pas compris !");
+      this.addMessage('all', "Je n'ai pas compris !");
     }
   }
 
