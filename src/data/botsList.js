@@ -1,5 +1,11 @@
 export default [
   {
+    index: 'all',
+    title: 'Chatbot-IO',
+    img: 'https://icones.pro/wp-content/uploads/2022/10/icone-robot-violet.png',
+    statut: 'none'
+  },
+  {
     index: 1,
     title: 'Bot I',
     img: 'https://static.vecteezy.com/ti/vecteur-libre/p1/10054157-chat-bot-robot-avatar-en-cercle-forme-ronde-isole-sur-fond-blanc-illustrationle-de-stock-technologie-ai-futuriste-aide-communication-conversation-concept-dans-un-style-plat-vectoriel.jpg',
