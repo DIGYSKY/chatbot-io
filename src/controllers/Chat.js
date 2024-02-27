@@ -12,6 +12,7 @@ const Chat = class {
     this.el = document.querySelector('#root');
     this.botAction = botAction;
     this.botList = botList;
+    this.history = [];
     this.run();
   }
 
@@ -42,34 +43,38 @@ const Chat = class {
     });
   }
 
-  addMessage(who, message) {
+  addMessage(who, message, pushToHistory = true) {
     const messageBox = document.getElementById('message-box');
     const bot = [];
-    if (who !== 0 && who !== 'all') {
+    if (who !== 0) {
       this.botList.forEach((thisBot) => {
         if (thisBot.index === who) {
           bot.push(thisBot);
         }
       });
-    } else if (who === 'all') {
-      bot.push({
-        title: 'Tout le monde',
-        img: 'hello'
-      });
     }
 
     const newMessage = (`
-    <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
-      ${who !== 0 ? `<p>${bot[0].title}</p>` : '<p>User</p>'}
-      ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
-    </div>
-    <div class="${who === 0 ? 'user-message' : 'bot-message'}">
-      <p>${message}</p>
-    </div>
-    <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
-      <p>${this.getDate()}</p>
-    </div>
-  `);
+      <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
+        ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
+        ${who !== 0 ? `<p>| ${bot[0].title}</p>` : '<p>Vous</p>'}
+      </div>
+      <div class="${who === 0 ? 'user-message' : 'bot-message'}">
+        <p>${message}</p>
+      </div>
+      <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
+        <p>${this.getDate()}</p>
+      </div>
+    `);
+
+    if (pushToHistory) {
+      const messageHistory = {
+        who,
+        message
+      };
+
+      this.pushToHistory(messageHistory);
+    }
 
     messageBox.innerHTML += newMessage;
   }
@@ -146,7 +151,7 @@ const Chat = class {
       this.botAction.forEach((actionList) => {
         actionList.keyWord.forEach((wordAction) => {
           if (maxMatchWord === wordAction) {
-            this.addMessage(actionList.who, actionList.action());
+            this.addMessage(actionList.who, actionList.action(), actionList.history);
           }
         });
       });
@@ -185,11 +190,33 @@ const Chat = class {
     `);
   }
 
+  pushToHistory(message) {
+    const historyJSON = localStorage.getItem('messageHistory');
+    const history = JSON.parse(historyJSON) || [];
+
+    history.push(message);
+
+    const pushHistoryJSON = JSON.stringify(history);
+
+    localStorage.setItem('messageHistory', pushHistoryJSON);
+  }
+
+  renderHistory() {
+    const historyJSON = localStorage.getItem('messageHistory');
+    const history = JSON.parse(historyJSON) || [];
+    const pushToHistory = false;
+
+    history.forEach((message) => {
+      this.addMessage(message.who, message.message, pushToHistory);
+    });
+  }
+
   run() {
     this.el.innerHTML = this.render();
     this.scrollBottom();
     this.inputMessage();
     this.showBotPopup();
+    this.renderHistory();
   }
 };
 
