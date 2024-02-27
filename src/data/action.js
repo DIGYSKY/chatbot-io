@@ -6,7 +6,7 @@ export default [
     who: 'all',
     description: 'Dire bonjour aux bots',
     keyWord: ['bonjour', 'hello', 'salut'],
-    action: () => ('Bonjour !')
+    action: () => ('<p>Bonjour !</p>')
   }, {
     name: 'Clear',
     accordCocordence: false,
@@ -20,7 +20,7 @@ export default [
 
       localStorage.removeItem('messageHistory');
 
-      return ('Messages supprimer !');
+      return ('<p>Messages supprimer !</p>');
     }
   }, {
     name: 'Insultes',
@@ -29,6 +29,6 @@ export default [
     who: 'all',
     description: 'Dire bonjour aux bots',
     keyWord: ['connard', 'fdp', 'pute', 'salope', 'enculer', 'pouilleux'],
-    action: () => ('Les insultes ne pas acceptable !')
+    action: () => ('<p>Les insultes ne pas acceptable !</p>')
   }
 ];

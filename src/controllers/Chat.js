@@ -60,7 +60,7 @@ const Chat = class {
         ${who !== 0 ? `<p>| ${bot[0].title}</p>` : '<p>Vous</p>'}
       </div>
       <div class="${who === 0 ? 'user-message' : 'bot-message'}">
-        <p>${message}</p>
+        ${message}
       </div>
       <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
         <p>${this.getDate()}</p>
