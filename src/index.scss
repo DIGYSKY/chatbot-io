@@ -160,10 +160,42 @@ body {
   color: white;
 }
 
+.user-chrono {
+  align-self: flex-end;
+}
+
+.user-chrono, .bot-chrono {
+  margin-bottom: 1.5em;
+}
+
+.name-user {
+  align-self: flex-end;
+}
+
+.name-user, .name-bot {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  max-width: 70%;
+
+  img {
+    width: 30px;
+    height: 30px;
+    margin-right: 0.5em;
+    border-radius: 1em;
+  }
+
+  p {
+    color: #752696;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 0.1em;
+  }
+}
+
 .bot-message, .user-message {
   text-align: left;
   box-shadow: 10px 10px 123px -70px rgba(0,0,0,0.55);
-  margin-bottom: 1.5em;
   border-radius: 1em;
   font-size: 1.2em;
   max-width: 70%;
