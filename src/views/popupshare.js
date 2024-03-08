@@ -1,6 +1,5 @@
 export default () => (`
 <div class="popup-partage">
-<img src="https://icones.pro/wp-content/uploads/2022/10/icone-robot-violet.png"</img>
 <h4> ChatbotIo | Share</h4>
   <div class="shareon popup-content" data-url="https://www.google.fr">
   <a class="facebook"></a>

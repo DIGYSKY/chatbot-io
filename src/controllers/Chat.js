@@ -180,7 +180,7 @@ const Chat = class {
   showPopupShare() {
     document.addEventListener('DOMContentLoaded', () => {
       const button = document.querySelector('.popup-share');
-      const popupContent = document.querySelector('.popup-content');
+      const popupContent = document.querySelector('.popup-partage');
       const closeButton = document.querySelector('.close-button-share');
       button.addEventListener('click', () => {
         popupContent.style.display = 'block';
