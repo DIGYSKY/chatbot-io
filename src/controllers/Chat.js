@@ -6,6 +6,7 @@ import viewEntry from '../views/entry';
 import viewNav from '../views/nav';
 import viewBots from '../views/bots';
 import viewPopup from '../views/popup';
+import viewPopupShare from '../views/popupshare';
 
 const Chat = class {
   constructor() {
@@ -176,6 +177,20 @@ const Chat = class {
     });
   }
 
+  showPopupShare() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('.popup-share');
+      const popupContent = document.querySelector('.popup-content');
+      const closeButton = document.querySelector('.close-button-share');
+      button.addEventListener('click', () => {
+        popupContent.style.display = 'block';
+      });
+      closeButton.addEventListener('click', () => {
+        popupContent.style.display = 'none';
+      });
+    });
+  }
+
   render() {
     return (`
         ${viewNav()}
@@ -186,6 +201,7 @@ const Chat = class {
           ${viewMessage()}
           ${viewEntry()}
           ${viewPopup()}
+          ${viewPopupShare()} 
         </div>
     `);
   }
@@ -216,6 +232,7 @@ const Chat = class {
     this.scrollBottom();
     this.inputMessage();
     this.showBotPopup();
+    this.showPopupShare();
     this.renderHistory();
   }
 };

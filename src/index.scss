@@ -250,7 +250,7 @@ body {
   color: var(--secondary);
 }
 
-.popup {
+.popup, .popup-partage {
   display: none;
   position: fixed;
   top: 50%;
@@ -275,7 +275,7 @@ body {
   margin-top: -4.5%;
 }
 
-.popup-content {
+.popup-content, .shareon{
   text-align: center;
   align-items: flex-end;
 }
@@ -291,4 +291,11 @@ body {
 
 .close-button:hover {
   background-color: #5e2772;
+}
+
+button .share {
+  position:relative;
+  width: 50px;
+  right: 80%;
+  margin-bottom: 35%;
 }
