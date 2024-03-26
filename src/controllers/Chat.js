@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import botAction from '../data/action';
 import botList from '../data/botsList';
 import viewMessage from '../views/message';
@@ -13,6 +13,7 @@ const Chat = class {
     this.botAction = botAction;
     this.botList = botList;
     this.history = [];
+    this.apiLinks = 'http://localhost:81';
     this.run();
   }
 
@@ -43,7 +44,7 @@ const Chat = class {
     });
   }
 
-  addMessage(who, message, pushToHistory = true) {
+  addMessage(who, message, pushToHistory = true, date = false) {
     const messageBox = document.getElementById('message-box');
     const bot = [];
     if (who !== 0) {
@@ -54,6 +55,8 @@ const Chat = class {
       });
     }
 
+    const messageDate = !date ? this.getDate() : date;
+
     const newMessage = (`
       <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
         ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
@@ -63,14 +66,15 @@ const Chat = class {
         ${message}
       </div>
       <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
-        <p>${this.getDate()}</p>
+        <p>${messageDate}</p>
       </div>
     `);
 
     if (pushToHistory) {
       const messageHistory = {
         who,
-        message
+        message,
+        date: messageDate
       };
 
       this.pushToHistory(messageHistory);
@@ -162,6 +166,15 @@ const Chat = class {
     }
   }
 
+  async apiChatBot(root, params = '') {
+    try {
+      const res = await axios.get(`${this.apiLinks}/${root}/${params}`);
+      return res.data;
+    } catch (error) {
+      return []; // En cas d'erreur, retourner une valeur par défaut
+    }
+  }
+
   showBotPopup() {
     document.addEventListener('DOMContentLoaded', () => {
       const button = document.querySelector('.button-bot');
@@ -207,7 +220,16 @@ const Chat = class {
     const pushToHistory = false;
 
     history.forEach((message) => {
-      this.addMessage(message.who, message.message, pushToHistory);
+      this.addMessage(message.who, message.message, pushToHistory, message.date);
+    });
+  }
+
+  async renderHistoryAPI() {
+    const history = await this.apiChatBot('messages');
+    const pushToHistory = false;
+
+    history.forEach((message) => {
+      this.addMessage(message.who, message.message, pushToHistory, message.date);
     });
   }
 
@@ -216,7 +238,8 @@ const Chat = class {
     this.scrollBottom();
     this.inputMessage();
     this.showBotPopup();
-    this.renderHistory();
+    // this.renderHistory();
+    this.renderHistoryAPI();
   }
 };
 
