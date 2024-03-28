@@ -37,7 +37,6 @@ const Chat = class {
       if (messageValue !== '') {
         elMessageInput.value = '';
         this.addMessage(0, messageValue);
-        // this.saveMessage(0, messageValue);
         this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
         elMessageBox.scrollTop = elMessageBox.scrollHeight;
       }
@@ -171,7 +170,7 @@ const Chat = class {
       const res = await axios.get(`${this.apiLinks}/${root}/${params}`);
       return res.data;
     } catch (error) {
-      return []; // En cas d'erreur, retourner une valeur par défaut
+      return [];
     }
   }
 
@@ -203,7 +202,7 @@ const Chat = class {
     `);
   }
 
-  pushToHistory(message) {
+  pushToHistoryNoAPI(message) {
     const historyJSON = localStorage.getItem('messageHistory');
     const history = JSON.parse(historyJSON) || [];
 
@@ -212,6 +211,16 @@ const Chat = class {
     const pushHistoryJSON = JSON.stringify(history);
 
     localStorage.setItem('messageHistory', pushHistoryJSON);
+  }
+
+  pushToHistory(message) {
+    axios.put(`${this.apiLinks}/messages`, message)
+      .then((response) => {
+        console.log('Réponse du serveur :', response.data);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de l\'envoi des données :', error);
+      });
   }
 
   renderHistory() {
