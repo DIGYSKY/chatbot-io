@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const apiLinks = 'http://localhost:81';
+
 export default [
   {
     name: 'Bonjour',
@@ -6,7 +10,7 @@ export default [
     who: 'all',
     description: 'Dire bonjour aux bots',
     keyWord: ['bonjour', 'hello', 'salut'],
-    action: () => ('<p>Bonjour !</p>')
+    action: async () => ('Bonjour !')
   }, {
     name: 'Clear',
     accordCocordence: false,
@@ -14,26 +18,39 @@ export default [
     who: 'all',
     description: 'Supprimer les messages',
     keyWord: ['clear'],
-    action: () => {
-      const messageBox = document.getElementById('message-box');
-      messageBox.innerHTML = '';
-
-      localStorage.removeItem('messageHistory');
-
-      return ('<p>Messages supprimer !</p>');
+    action: async () => {
+      axios.delete(`${apiLinks}/messages`);
+      /* eslint-disable no-restricted-globals */
+      location.reload();
+      /* eslint-enable no-restricted-globals */
+      return ('Messages supprimer !');
     }
   }, {
     name: 'Insultes',
     accordCocordence: true,
     history: true,
     who: 'all',
-    description: 'Dire bonjour aux bots',
+    description: '',
     keyWord: ['connard', 'fdp', 'pute', 'salope', 'salot', 'enculer',
       'pouilleux', 'con', 'merde', 'bordel', 'enculé', 'conne',
       'emmerdeur', 'branleur', 'salope', 'sale pute', 'taupe', 'taré',
       'tapette', 'gros lard', 'gros bœuf', 'grosse vache', 'grosse truie',
       'gros porc', 'grosse pute', 'grosse salope', 'pédale', 'pédé',
       'enculeur', 'salopard'],
-    action: () => ('<p>Les insultes ne pas acceptable !</p>')
+    action: async () => ('Les insultes ne pas acceptable !')
+  }, {
+    name: 'ChuckNorris',
+    accordCocordence: true,
+    history: true,
+    who: 1,
+    description: 'Blague de Chuck Norris',
+    keyWord: ['chuck', 'norris'],
+    action: async () => {
+      const res = await axios.patch(`${apiLinks}/messages`);
+
+      const { joke } = res.data;
+
+      return `${joke}`;
+    }
   }
 ];

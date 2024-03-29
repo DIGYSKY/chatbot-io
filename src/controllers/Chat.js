@@ -13,6 +13,7 @@ const Chat = class {
     this.botList = botList;
     this.history = [];
     this.apiLinks = 'http://localhost:81';
+    this.response = '';
     this.run();
   }
 
@@ -35,50 +36,54 @@ const Chat = class {
 
       if (messageValue !== '') {
         elMessageInput.value = '';
-        this.addMessage(0, messageValue);
-        this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
-        elMessageBox.scrollTop = elMessageBox.scrollHeight;
+        this.addMessage(0, messageValue).then(() => {
+          this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+          elMessageBox.scrollTop = elMessageBox.scrollHeight;
+        });
       }
     });
   }
 
   addMessage(who, message, pushToHistory = true, date = false) {
-    const messageBox = document.getElementById('message-box');
-    const bot = [];
-    if (who !== 0) {
-      this.botList.forEach((thisBot) => {
-        if (thisBot.index === who) {
-          bot.push(thisBot);
-        }
-      });
-    }
+    return new Promise((resolve) => {
+      const messageBox = document.getElementById('message-box');
+      const bot = [];
+      if (who !== 0) {
+        this.botList.forEach((thisBot) => {
+          if (thisBot.index === who) {
+            bot.push(thisBot);
+          }
+        });
+      }
 
-    const messageDate = !date ? this.getDate() : date;
+      const messageDate = !date ? this.getDate() : date;
 
-    const newMessage = (`
-      <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
-        ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
-        ${who !== 0 ? `<p>| ${bot[0].title}</p>` : '<p>Vous</p>'}
-      </div>
-      <div class="${who === 0 ? 'user-message' : 'bot-message'}">
-        ${message}
-      </div>
-      <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
-        <p>${messageDate}</p>
-      </div>
-    `);
+      const newMessage = (`
+        <div class="${who !== 0 ? 'name-bot' : 'name-user'}">
+          ${who !== 0 ? `<img src="${bot[0].img}" class="" alt="...">` : ''}
+          ${who !== 0 ? `<p>| ${bot[0].title}</p>` : '<p>Vous</p>'}
+        </div>
+        <div class="${who === 0 ? 'user-message' : 'bot-message'}">
+          <p>${message}</p>
+        </div>
+        <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
+          <p>${messageDate}</p>
+        </div>
+      `);
 
-    if (pushToHistory) {
-      const messageHistory = {
-        who,
-        message,
-        date: messageDate
-      };
+      if (pushToHistory) {
+        const messageHistory = {
+          who,
+          message,
+          date: messageDate
+        };
 
-      this.pushToHistory(messageHistory);
-    }
+        this.pushToHistory(messageHistory);
+      }
 
-    messageBox.innerHTML += newMessage;
+      messageBox.innerHTML += newMessage;
+      resolve();
+    });
   }
 
   getDate() {
@@ -151,9 +156,10 @@ const Chat = class {
       });
 
       this.botAction.forEach((actionList) => {
-        actionList.keyWord.forEach((wordAction) => {
+        actionList.keyWord.forEach(async (wordAction) => {
           if (maxMatchWord === wordAction) {
-            this.addMessage(actionList.who, actionList.action(), actionList.history);
+            const render = await actionList.action();
+            this.addMessage(actionList.who, render, actionList.history);
           }
         });
       });
@@ -211,13 +217,7 @@ const Chat = class {
   }
 
   pushToHistory(message) {
-    axios.put(`${this.apiLinks}/messages`, message)
-      .then((response) => {
-        console.log('Réponse du serveur :', response.data);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de l\'envoi des données :', error);
-      });
+    axios.put(`${this.apiLinks}/messages`, message);
   }
 
   renderHistory() {

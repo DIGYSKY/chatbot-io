@@ -39,9 +39,13 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     host: '127.0.0.1',
-    port: 9090,
+    port: 8080,
     open: true,
     hot: true,
+    headers: { 
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+    },
     client: {
       logging: 'info',
       overlay: true,
