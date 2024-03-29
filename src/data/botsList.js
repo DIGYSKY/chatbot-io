@@ -7,8 +7,8 @@ export default [
   },
   {
     index: 1,
-    title: 'Bot I',
-    img: 'https://static.vecteezy.com/ti/vecteur-libre/p1/10054157-chat-bot-robot-avatar-en-cercle-forme-ronde-isole-sur-fond-blanc-illustrationle-de-stock-technologie-ai-futuriste-aide-communication-conversation-concept-dans-un-style-plat-vectoriel.jpg',
+    title: 'Chuck Norris',
+    img: 'https://static.wikia.nocookie.net/character-stats-and-profiles/images/7/78/ChuckNorris.png',
     description: 'description du chatbot',
     commandes: 'Input : Bonjour | Output : Bonjour',
     statut: true

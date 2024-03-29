@@ -18,10 +18,8 @@ const Chat = class {
   }
 
   scrollBottom() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const messageDiv = document.querySelector('.message');
-      messageDiv.scrollTop = messageDiv.scrollHeight;
-    });
+    const messageDiv = document.querySelector('.message');
+    messageDiv.scrollTop = messageDiv.scrollHeight;
   }
 
   inputMessage() {
@@ -32,13 +30,11 @@ const Chat = class {
 
       const messageValue = document.getElementById('message-user').value;
       const elMessageInput = document.getElementById('message-user');
-      const elMessageBox = document.querySelector('.message');
 
       if (messageValue !== '') {
         elMessageInput.value = '';
         this.addMessage(0, messageValue).then(() => {
           this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
-          elMessageBox.scrollTop = elMessageBox.scrollHeight;
         });
       }
     });
@@ -82,6 +78,11 @@ const Chat = class {
       }
 
       messageBox.innerHTML += newMessage;
+
+      const elMessageBox = document.querySelector('.message');
+
+      elMessageBox.scrollTop = elMessageBox.scrollHeight;
+
       resolve();
     });
   }
@@ -111,7 +112,12 @@ const Chat = class {
           const diffWord = Math.abs(distWordA - distWordB);
 
           if (wordA === wordB) {
-            matchWord.push({ word: wordB, perc: 200 });
+            matchWord.push({
+              word: wordB,
+              perc: 200,
+              actionName: action.name,
+              matchRequired: action.matchRequired
+            });
           } else if (action.accordCocordence && diffWord <= 3) {
             let matchLetters = 0;
             let matchErrors = 0;
@@ -136,7 +142,9 @@ const Chat = class {
             if (percentageMatch > percentageErrors && percentageMatch >= 30) {
               matchWord.push({
                 word: wordB,
-                perc: percentageMatch
+                perc: percentageMatch,
+                actionName: action.name,
+                matchRequired: action.matchRequired
               });
             }
           }
@@ -147,13 +155,30 @@ const Chat = class {
     if (matchWord.length) {
       let maxMatch = 0;
       let maxMatchWord = '';
+      let matchActionName = '';
+      let matchRequired = false;
+      let lengthMatchRequired = 0;
+      let matchRequirednum = 0;
 
       matchWord.forEach((wordObj) => {
         if (wordObj.perc > maxMatch) {
           maxMatch = wordObj.perc;
           maxMatchWord = wordObj.word;
+          matchRequired = wordObj.matchRequired > 1;
+          matchRequirednum = wordObj.matchRequired;
+          matchActionName = wordObj.name;
         }
       });
+
+      if (matchRequired) {
+        matchWord.forEach((wordObj) => {
+          if (matchActionName === wordObj.name) {
+            lengthMatchRequired += 1;
+          }
+        });
+
+        if (lengthMatchRequired < matchRequirednum) { matchWord.length = 0; maxMatchWord = ''; }
+      }
 
       this.botAction.forEach((actionList) => {
         actionList.keyWord.forEach(async (wordAction) => {
@@ -217,7 +242,7 @@ const Chat = class {
   }
 
   pushToHistory(message) {
-    axios.put(`${this.apiLinks}/messages`, message);
+    axios.post(`${this.apiLinks}/messages`, message);
   }
 
   renderHistory() {
