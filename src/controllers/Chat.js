@@ -114,7 +114,7 @@ const Chat = class {
           if (wordA === wordB) {
             matchWord.push({
               word: wordB,
-              perc: 200,
+              perc: 100,
               actionName: action.name,
               matchRequired: action.matchRequired
             });
@@ -154,7 +154,6 @@ const Chat = class {
 
     if (matchWord.length) {
       let maxMatch = 0;
-      let maxMatchWord = '';
       let matchActionName = '';
       let matchRequired = false;
       let lengthMatchRequired = 0;
@@ -163,10 +162,9 @@ const Chat = class {
       matchWord.forEach((wordObj) => {
         if (wordObj.perc > maxMatch) {
           maxMatch = wordObj.perc;
-          maxMatchWord = wordObj.word;
           matchRequired = wordObj.matchRequired > 1;
           matchRequirednum = wordObj.matchRequired;
-          matchActionName = wordObj.name;
+          matchActionName = wordObj.actionName;
         }
       });
 
@@ -177,16 +175,14 @@ const Chat = class {
           }
         });
 
-        if (lengthMatchRequired < matchRequirednum) { matchWord.length = 0; maxMatchWord = ''; }
+        if (lengthMatchRequired < matchRequirednum) { matchWord.length = 0; matchActionName = ''; }
       }
 
-      this.botAction.forEach((actionList) => {
-        actionList.keyWord.forEach(async (wordAction) => {
-          if (maxMatchWord === wordAction) {
-            const render = await actionList.action();
-            this.addMessage(actionList.who, render, actionList.history);
-          }
-        });
+      this.botAction.forEach(async (actionList) => {
+        if (matchActionName === actionList.name) {
+          const render = await actionList.action();
+          this.addMessage(actionList.who, render, actionList.history);
+        }
       });
     }
 

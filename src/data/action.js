@@ -13,6 +13,15 @@ export default [
     keyWord: ['bonjour', 'hello', 'salut'],
     action: async () => ('Bonjour !')
   }, {
+    name: 'Bonjour chuck norris',
+    accordCocordence: true,
+    history: true,
+    matchRequired: 3,
+    who: 1,
+    description: 'Dire bonjour à Chuck Norris',
+    keyWord: ['bonjour', 'chuck', 'norris'],
+    action: async () => ('C\'est moi.. Qui dis BONJOUR !')
+  }, {
     name: 'Clear',
     accordCocordence: false,
     history: false,
