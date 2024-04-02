@@ -21,10 +21,10 @@ export default (bot) => {
         </div>
       </button>
       <div class="popup" style="display: none;">
-        <img src="https://icones.pro/wp-content/uploads/2022/10/icone-robot-violet.png" />
+        <img src="${bot.img}" />
         <h4>${bot.title} | Commandes</h4>
         <div class="popup-content">
-          <p>${bot.commandes}</p>
+          <p>- ${bot.commandes}</p>
         </div>
       </div>
     </div>

@@ -249,46 +249,53 @@ body {
   background-color: var(--tertiary);
   color: var(--secondary);
 }
-
 .popup {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
+  border-radius: 3rem;
+  top: 22%;
+  left: 60%;
   transform: translate(-50%, -50%);
-  background-color: #dcdcdc;
+  background-color: #bfbfbf;
   padding: 20px;
-  border: 1px solid #f4f4f4;
+  border: 2px solid var(--tertiary);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   max-width: 800px;
   width: 200%;
-  z-index: 10;
+  opacity: 0; /* L'élément est initialement transparent */
+  animation: fade-in 0.5s ease-in-out forwards; /* Animation de fondu */
 }
 
-.popup img{
+.popup img {
   width: 5%;
 }
 
-.popup h4{
-  color: #752696;
-  margin-left: 6%;
+.popup h4 {
+  color: var(--tertiary);
+  margin-left: 29.3%;
   margin-top: -4.5%;
 }
 
-.popup-content {
-  text-align: center;
-  align-items: flex-end;
+.popup-content p {
+  color: #000000;
+  font-family: "Space Grotesk", sans-serif;
+  margin-left: 10%;
+  margin-top: 5%;
 }
 
-.close-button {
-  background-color: #752696;
-  color: #f4f4f4;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.close-button:hover {
-  background-color: #5e2772;
+.popup:before {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 0;
+  height: 0;
 }

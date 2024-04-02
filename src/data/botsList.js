@@ -10,7 +10,7 @@ export default [
     title: 'Chuck Norris',
     img: 'https://static.wikia.nocookie.net/character-stats-and-profiles/images/7/78/ChuckNorris.png',
     description: 'description du chatbot',
-    commandes: 'Input : Bonjour | Output : Bonjour',
+    commandes: 'Input : Chuck | Output : Blague aléatoire sur Chuck Norris',
     statut: true
   },
   {
