@@ -131,7 +131,7 @@ body {
   min-height: var(--height-message-box);
   max-height: var(--height-message-box);
   overflow: hidden;
-  z-index: 5;
+  z-index: 1;
 }
 
 .message {
@@ -249,6 +249,7 @@ body {
   background-color: var(--tertiary);
   color: var(--secondary);
 }
+
 .popup {
   display: none;
   position: fixed;
@@ -272,8 +273,10 @@ body {
 
 .popup h4 {
   color: var(--tertiary);
-  margin-left: 29.3%;
-  margin-top: -4.5%;
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .popup-content p {
