@@ -63,9 +63,9 @@ const Chat = class {
           <p>${message}</p>
         </div>
         <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
-          <p>${messageDate}</p>
-        </div>
-      `);
+        <p class="mess-date">${messageDate}</p>
+      </div>
+    `);
 
       if (pushToHistory) {
         const messageHistory = {

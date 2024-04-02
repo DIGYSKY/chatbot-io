@@ -10,8 +10,8 @@ export default (bot) => {
             <div class="col-md-3">
               <img src="${bot.img}" class="img-fluid rounded-start card-img-top" alt="...">
             </div>
-            <div class="col-md-8">
-              <div class="card-body m-3">
+            <div class="col-md-9">
+              <div class="card-body m-8">
                 <h5 class="card-title">Chatbot | ${bot.title}</h5>
                 <p class="card-text">${bot.description}</p>
                 <p class="${bot.statut ? 'text-success' : 'text-danger'}">${bot.statut ? 'Bot online' : 'Bot offline'}</p>
