@@ -113,10 +113,11 @@ const Chat = class {
 
           if (wordA === wordB) {
             matchWord.push({
-              word: wordB,
+              wordA,
               perc: 100,
               actionName: action.name,
-              matchRequired: action.matchRequired
+              matchRequired: action.matchRequired,
+              wordB
             });
           } else if (action.accordCocordence && diffWord <= 3) {
             let matchLetters = 0;
@@ -141,10 +142,11 @@ const Chat = class {
 
             if (percentageMatch > percentageErrors && percentageMatch >= 30) {
               matchWord.push({
-                word: wordB,
+                wordA,
                 perc: percentageMatch,
                 actionName: action.name,
-                matchRequired: action.matchRequired
+                matchRequired: action.matchRequired,
+                wordB
               });
             }
           }
@@ -155,28 +157,46 @@ const Chat = class {
     if (matchWord.length) {
       let maxMatch = 0;
       let matchActionName = '';
-      let matchRequired = false;
       let lengthMatchRequired = 0;
-      let matchRequirednum = 0;
+      const matchRequiredFound = [];
+
+      console.log(matchWord);
 
       matchWord.forEach((wordObj) => {
-        if (wordObj.perc > maxMatch) {
+        lengthMatchRequired = 1;
+        if (wordObj.perc > maxMatch && wordObj.matchRequired < 2) {
           maxMatch = wordObj.perc;
-          matchRequired = wordObj.matchRequired > 1;
-          matchRequirednum = wordObj.matchRequired;
           matchActionName = wordObj.actionName;
+        }
+        if ((wordObj.matchRequired > 1)) {
+          matchWord.forEach((wordObj2) => {
+            if (wordObj.actionName === wordObj2.actionName
+              && wordObj.wordA === wordObj2.wordB) {
+              lengthMatchRequired += 1;
+              console.log(lengthMatchRequired);
+            }
+          });
+          if (lengthMatchRequired >= wordObj.matchRequired) {
+            maxMatch = 300;
+            matchRequiredFound.push({
+              lengthMatchRequired,
+              actionName: wordObj.actionName
+            });
+          }
         }
       });
 
-      if (matchRequired) {
-        matchWord.forEach((wordObj) => {
-          if (matchActionName === wordObj.name) {
-            lengthMatchRequired += 1;
+      if (maxMatch === 300) {
+        maxMatch = 0;
+        matchRequiredFound.forEach((match) => {
+          if (match.lengthMatchRequired > maxMatch) {
+            matchActionName = match.actionName;
+            maxMatch = match.lengthMatchRequired;
           }
         });
-
-        if (lengthMatchRequired < matchRequirednum) { matchWord.length = 0; matchActionName = ''; }
       }
+
+      if (!matchActionName) { matchWord.length = 0; matchActionName = ''; }
 
       this.botAction.forEach(async (actionList) => {
         if (matchActionName === actionList.name) {
@@ -265,7 +285,6 @@ const Chat = class {
     this.scrollBottom();
     this.inputMessage();
     this.showBotPopup();
-    // this.renderHistory();
     this.renderHistoryAPI();
   }
 };
