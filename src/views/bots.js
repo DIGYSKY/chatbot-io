@@ -1,5 +1,12 @@
-export default (bot) => {
+export default (bot, action) => {
   let render = '';
+  let botAction = '';
+
+  action.forEach((element) => {
+    if (element.who === bot.index) {
+      botAction += (`${element.name} | ${element.description} <br>`);
+    }
+  });
 
   if (bot.statut !== 'none') {
     render = `
@@ -22,9 +29,9 @@ export default (bot) => {
       </button>
       <div class="popup" style="display: none;">
         <img src="${bot.img}" />
-        <h4>${bot.title} | Commandes</h4>
+        <h4>${bot.title} | Commandes</h4><br>
         <div class="popup-content">
-          <p>- ${bot.commandes}</p>
+          <p>${botAction}</p>
         </div>
       </div>
     </div>

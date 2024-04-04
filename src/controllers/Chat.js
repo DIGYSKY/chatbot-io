@@ -160,8 +160,6 @@ const Chat = class {
       let lengthMatchRequired = 0;
       const matchRequiredFound = [];
 
-      console.log(matchWord);
-
       matchWord.forEach((wordObj) => {
         lengthMatchRequired = 1;
         if (wordObj.perc > maxMatch && wordObj.matchRequired < 2) {
@@ -173,7 +171,6 @@ const Chat = class {
             if (wordObj.actionName === wordObj2.actionName
               && wordObj.wordA === wordObj2.wordB) {
               lengthMatchRequired += 1;
-              console.log(lengthMatchRequired);
             }
           });
           if (lengthMatchRequired >= wordObj.matchRequired) {
@@ -243,8 +240,8 @@ const Chat = class {
         ${viewNav()}
         <div class="chatbot">
           <div class="chat-list">
-            ${this.botList.map((bot) => viewBots(bot)).join('')}
-          </div>
+            ${this.botList.map((bot) => viewBots(bot, botAction)).join('')}
+          </div>a
           ${viewMessage()}
           ${viewEntry()}}
         </div>
