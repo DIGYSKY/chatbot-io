@@ -30,11 +30,11 @@ export default [
     description: 'Supprimer les messages',
     keyWord: ['clear'],
     action: async () => {
-      axios.delete(`${apiLinks}/messages`);
+      await axios.delete(`${apiLinks}/messages`);
       /* eslint-disable no-restricted-globals */
       location.reload();
       /* eslint-enable no-restricted-globals */
-      return ('Messages supprimer !');
+      return ('Messages supprimés !');
     }
   }, {
     name: 'Insultes',
@@ -51,7 +51,7 @@ export default [
       'gros porc', 'grosse pute', 'grosse salope', 'pédale', 'pédé',
       'enculeur', 'salopard'
     ],
-    action: async () => ('Les insultes ne pas acceptable !')
+    action: async () => ('Les insultes ne sont pas acceptables !')
   }, {
     name: 'ChuckNorris',
     accordCocordence: true,
@@ -62,10 +62,8 @@ export default [
     keyWord: ['chuck', 'norris'],
     action: async () => {
       const res = await axios.get(`${apiLinks}/chucknorris`);
-
       const { joke } = res.data;
-
-      return `${joke}`;
+      return joke;
     }
   }
 ];

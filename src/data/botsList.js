@@ -10,7 +10,7 @@ export default [
     title: 'Chuck Norris',
     img: 'https://static.wikia.nocookie.net/character-stats-and-profiles/images/7/78/ChuckNorris.png',
     description: 'description du chatbot',
-    commandes: 'Input : Bonjour | Output : Bonjour',
+    commandes: 'Input : Chuck | Output : Blague aléatoire sur Chuck Norris',
     statut: true
   },
   {
@@ -18,7 +18,7 @@ export default [
     title: 'Bot II',
     img: 'https://static.vecteezy.com/ti/vecteur-libre/p1/10054157-chat-bot-robot-avatar-en-cercle-forme-ronde-isole-sur-fond-blanc-illustrationle-de-stock-technologie-ai-futuriste-aide-communication-conversation-concept-dans-un-style-plat-vectoriel.jpg',
     description: 'description du chatbot',
-    commandes: 'Input : Test | Output : Test',
+    commandes: 'Input : meteo | Output : Donne la météo',
     statut: false
   },
   {

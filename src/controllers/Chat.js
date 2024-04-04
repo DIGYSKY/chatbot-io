@@ -63,9 +63,9 @@ const Chat = class {
           <p>${message}</p>
         </div>
         <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
-          <p>${messageDate}</p>
-        </div>
-      `);
+        <p class="mess-date">${messageDate}</p>
+      </div>
+    `);
 
       if (pushToHistory) {
         const messageHistory = {
@@ -222,9 +222,14 @@ const Chat = class {
 
   showBotPopup() {
     document.addEventListener('DOMContentLoaded', () => {
+      let displayPopup = null;
       const togglePopup = (button) => {
         const popupContent = button.nextElementSibling;
+        if (displayPopup && displayPopup !== popupContent) {
+          displayPopup.style.display = 'none';
+        }
         popupContent.style.display = popupContent.style.display === 'block' ? 'none' : 'block';
+        displayPopup = popupContent.style.display === 'block' ? popupContent : null;
       };
       const buttons = document.querySelectorAll('.button-bot');
       buttons.forEach((button) => {
