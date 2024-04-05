@@ -66,7 +66,7 @@ const Chat = class {
         </div>
         <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
         <p class="mess-date">${messageDate}</p>
-      </div>
+        </div>
       `);
 
       if (pushToHistory && pushToHistory !== 'init') {
@@ -170,30 +170,32 @@ const Chat = class {
     const matchRequiredFound = [];
 
     matchWord.forEach((wordObj) => {
-      lengthMatchRequired = 1;
-      if (wordObj.perc > maxMatch && wordObj.matchRequired < 2) {
-        maxMatch = wordObj.perc;
-        matchActionName = wordObj.actionName;
-      }
-      if ((wordObj.matchRequired > 1)) {
-        matchWord.forEach((wordObj2) => {
-          if (wordObj.actionName === wordObj2.actionName
-            && wordObj.wordA === wordObj2.wordB) {
-            lengthMatchRequired += 1;
-          }
-        });
-        if (lengthMatchRequired >= wordObj.matchRequired) {
-          maxMatch = 300;
-          matchRequiredFound.push({
-            lengthMatchRequired,
-            actionName: wordObj.actionName
+      lengthMatchRequired = 0;
+      if (wordObj.perc > maxMatch) {
+        if ((wordObj.matchRequired > 1)) {
+          matchWord.forEach((wordObj2) => {
+            if (wordObj.actionName === wordObj2.actionName) {
+              lengthMatchRequired += 1;
+            }
           });
+
+          if (lengthMatchRequired >= wordObj.matchRequired) {
+            maxMatch = 300;
+            matchRequiredFound.push({
+              lengthMatchRequired,
+              actionName: wordObj.actionName
+            });
+          }
+        } else {
+          maxMatch = wordObj.perc;
+          matchActionName = wordObj.actionName;
         }
       }
     });
 
     if (maxMatch === 300) {
       maxMatch = 0;
+      matchActionName = '';
       matchRequiredFound.forEach((match) => {
         if (match.lengthMatchRequired > maxMatch) {
           matchActionName = match.actionName;
