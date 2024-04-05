@@ -1,5 +1,5 @@
 export default () => (`
-<div class="message-box"><img class="fond-mess" src=""></img>
+<div class="message-box">
 <div id="message-box" class="message">
 </div>
 `);

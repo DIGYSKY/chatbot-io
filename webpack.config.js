@@ -21,14 +21,24 @@ module.exports = {
             plugins: ['@babel/plugin-transform-object-rest-spread']
           }
         }
-      },
-      {
+      }, {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+            loader: 'file-loader',
+            options: {}
+        }]
+      }, {
+        test: /\.(png|jpg|gif|webp)$/,
+        use: {
+          loader: 'url-loader'
+        }
+      }, {
         test: /\.s[ac]ss$/i,
         use: [
           "style-loader",
           "css-loader",
-          "sass-loader",
-        ],
+          "sass-loader"
+        ]
       },
       { test: /\.ts$/, use: 'ts-loader' }
     ],
@@ -42,17 +52,17 @@ module.exports = {
     port: 9090,
     open: true,
     hot: true,
-    headers: { 
+    headers: {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
+      "Access-Control-Allow-Credentials": true
     },
     client: {
       logging: 'info',
       overlay: true,
-      progress: true,
-      webSocketTransport: 'ws'
-    },
-    webSocketServer: 'ws'
+      progress: true
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

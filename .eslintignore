@@ -3,4 +3,4 @@ dist
 webpack.config.js
 .yarn-error.log
 .eslintrc.js
-src/scss/
+src/scss
