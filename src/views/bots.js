@@ -3,7 +3,7 @@ export default (bot, action) => {
   let botAction = '';
 
   action.forEach((element) => {
-    if (element.who === bot.index) {
+    if (bot.index !== 'all' && element.who.includes(bot.index)) {
       botAction += (`${element.name} | ${element.description} <br>`);
     }
   });

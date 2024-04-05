@@ -25,7 +25,7 @@ const Chat = class {
   inputMessage() {
     const form = document.getElementById('imput-user');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       const messageValue = document.getElementById('message-user').value;
@@ -33,25 +33,27 @@ const Chat = class {
 
       if (messageValue !== '') {
         elMessageInput.value = '';
-        this.addMessage(0, messageValue).then(() => {
-          this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
-        });
+        await this.addMessage(0, messageValue);
+        this.botRespons(messageValue.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
       }
     });
   }
 
-  addMessage(who, message, pushToHistory = true, date = false) {
-    return new Promise((resolve) => {
-      const messageBox = document.getElementById('message-box');
-      const bot = [];
-      if (who !== 0) {
-        this.botList.forEach((thisBot) => {
-          if (thisBot.index === who) {
-            bot.push(thisBot);
-          }
-        });
-      }
+  async addMessage(who, message, pushToHistory = true, date = false) {
+    const messageBox = document.getElementById('message-box');
+    const bot = [];
+    let botStatut = true;
 
+    if (who !== 0) {
+      this.botList.forEach((thisBot) => {
+        if (thisBot.index === who) {
+          bot.push(thisBot);
+          botStatut = thisBot.statut;
+        }
+      });
+    }
+
+    if (botStatut || pushToHistory === 'init') {
       const messageDate = !date ? this.getDate() : date;
 
       const newMessage = (`
@@ -65,9 +67,9 @@ const Chat = class {
         <div class="${who === 0 ? 'user-chrono' : 'bot-chorno'}">
         <p class="mess-date">${messageDate}</p>
       </div>
-    `);
+      `);
 
-      if (pushToHistory) {
+      if (pushToHistory && pushToHistory !== 'init') {
         const messageHistory = {
           who,
           message,
@@ -82,9 +84,7 @@ const Chat = class {
       const elMessageBox = document.querySelector('.message');
 
       elMessageBox.scrollTop = elMessageBox.scrollHeight;
-
-      resolve();
-    });
+    }
   }
 
   getDate() {
@@ -102,109 +102,117 @@ const Chat = class {
   }
 
   botRespons(wordList) {
-    const matchWord = [];
+    let matchWord = [];
     const wordListSplit = wordList.split(' ');
     this.botAction.forEach((action) => {
       action.keyWord.forEach((wordB) => {
         wordListSplit.forEach((wordA) => {
-          const distWordA = wordA.length;
-          const distWordB = wordB.length;
-          const diffWord = Math.abs(distWordA - distWordB);
-
-          if (wordA === wordB) {
-            matchWord.push({
-              wordA,
-              perc: 100,
-              actionName: action.name,
-              matchRequired: action.matchRequired,
-              wordB
-            });
-          } else if (action.accordCocordence && diffWord <= 3) {
-            let matchLetters = 0;
-            let matchErrors = 0;
-
-            for (let i = 0; i < distWordA; i += 1) {
-              for (let j = 0; j < distWordB; j += 1) {
-                if (wordA[i] === wordB[j]
-                  && wordA[i] !== ' '
-                  && ((wordA[i + 1] === wordB[j + 1] && wordA[i + 2] === wordB[j + 2])
-                  || (wordA[i - 1] === wordB[j - 1] && wordA[i - 2] === wordB[j - 2]))) {
-                  matchLetters += 1;
-                  break;
-                } else if (matchErrors <= distWordB && wordA[i] !== ' ') {
-                  matchErrors += 0.1;
-                }
-              }
-            }
-
-            const percentageMatch = (matchLetters / distWordB) * 100;
-            const percentageErrors = (matchErrors / distWordB) * 100;
-
-            if (percentageMatch > percentageErrors && percentageMatch >= 30) {
-              matchWord.push({
-                wordA,
-                perc: percentageMatch,
-                actionName: action.name,
-                matchRequired: action.matchRequired,
-                wordB
-              });
-            }
-          }
+          matchWord = matchWord.concat(this.comparsWord(wordA, wordB, action));
         });
       });
     });
 
     if (matchWord.length) {
-      let maxMatch = 0;
-      let matchActionName = '';
-      let lengthMatchRequired = 0;
-      const matchRequiredFound = [];
+      this.maxMatch(matchWord);
+    } else {
+      this.addMessage('all', "Je n'ai pas compris !");
+    }
+  }
 
-      matchWord.forEach((wordObj) => {
-        lengthMatchRequired = 1;
-        if (wordObj.perc > maxMatch && wordObj.matchRequired < 2) {
-          maxMatch = wordObj.perc;
-          matchActionName = wordObj.actionName;
-        }
-        if ((wordObj.matchRequired > 1)) {
-          matchWord.forEach((wordObj2) => {
-            if (wordObj.actionName === wordObj2.actionName
-              && wordObj.wordA === wordObj2.wordB) {
-              lengthMatchRequired += 1;
-            }
-          });
-          if (lengthMatchRequired >= wordObj.matchRequired) {
-            maxMatch = 300;
-            matchRequiredFound.push({
-              lengthMatchRequired,
-              actionName: wordObj.actionName
-            });
-          }
-        }
+  comparsWord(wordA, wordB, action) {
+    const matchWord = [];
+    const distWordA = wordA.length;
+    const distWordB = wordB.length;
+
+    if (wordA === wordB) {
+      matchWord.push({
+        wordA, perc: 100, actionName: action.name, matchRequired: action.matchRequired, wordB
       });
+    } else if (action.accordCocordence && Math.abs(distWordA - distWordB) <= 3) {
+      let matchLetters = 0;
+      let matchErrors = 0;
 
-      if (maxMatch === 300) {
-        maxMatch = 0;
-        matchRequiredFound.forEach((match) => {
-          if (match.lengthMatchRequired > maxMatch) {
-            matchActionName = match.actionName;
-            maxMatch = match.lengthMatchRequired;
+      for (let i = 0; i < distWordA; i += 1) {
+        for (let j = 0; j < distWordB; j += 1) {
+          if (wordA[i] === wordB[j]
+            && wordA[i] !== ' '
+            && ((wordA[i + 1] === wordB[j + 1] && wordA[i + 2] === wordB[j + 2])
+            || (wordA[i - 1] === wordB[j - 1] && wordA[i - 2] === wordB[j - 2]))) {
+            matchLetters += 1;
+            break;
+          } else if (matchErrors <= distWordB && wordA[i] !== ' ') {
+            matchErrors += 0.1;
           }
-        });
+        }
       }
 
-      if (!matchActionName) { matchWord.length = 0; matchActionName = ''; }
+      const percentageMatch = (matchLetters / distWordB) * 100;
+      const percentageErrors = (matchErrors / distWordB) * 100;
 
-      this.botAction.forEach(async (actionList) => {
-        if (matchActionName === actionList.name) {
-          const render = await actionList.action();
-          this.addMessage(actionList.who, render, actionList.history);
+      if (percentageMatch > percentageErrors && percentageMatch >= 30) {
+        matchWord.push({
+          wordA,
+          perc: percentageMatch,
+          actionName: action.name,
+          matchRequired: action.matchRequired,
+          wordB
+        });
+      }
+    }
+
+    return matchWord;
+  }
+
+  maxMatch(matchWord) {
+    let maxMatch = 0;
+    let matchActionName = '';
+    let lengthMatchRequired = 0;
+    const matchRequiredFound = [];
+
+    matchWord.forEach((wordObj) => {
+      lengthMatchRequired = 1;
+      if (wordObj.perc > maxMatch && wordObj.matchRequired < 2) {
+        maxMatch = wordObj.perc;
+        matchActionName = wordObj.actionName;
+      }
+      if ((wordObj.matchRequired > 1)) {
+        matchWord.forEach((wordObj2) => {
+          if (wordObj.actionName === wordObj2.actionName
+            && wordObj.wordA === wordObj2.wordB) {
+            lengthMatchRequired += 1;
+          }
+        });
+        if (lengthMatchRequired >= wordObj.matchRequired) {
+          maxMatch = 300;
+          matchRequiredFound.push({
+            lengthMatchRequired,
+            actionName: wordObj.actionName
+          });
+        }
+      }
+    });
+
+    if (maxMatch === 300) {
+      maxMatch = 0;
+      matchRequiredFound.forEach((match) => {
+        if (match.lengthMatchRequired > maxMatch) {
+          matchActionName = match.actionName;
+          maxMatch = match.lengthMatchRequired;
         }
       });
     }
 
-    if (!matchWord.length) {
+    if (!matchActionName) {
       this.addMessage('all', "Je n'ai pas compris !");
+    } else {
+      this.botAction.forEach(async (actionList) => {
+        if (matchActionName === actionList.name) {
+          const render = await actionList.action();
+          actionList.who.forEach((who) => {
+            this.addMessage(who, render, actionList.history);
+          });
+        }
+      });
     }
   }
 
@@ -248,34 +256,13 @@ const Chat = class {
     `);
   }
 
-  pushToHistoryNoAPI(message) {
-    const historyJSON = localStorage.getItem('messageHistory');
-    const history = JSON.parse(historyJSON) || [];
-
-    history.push(message);
-
-    const pushHistoryJSON = JSON.stringify(history);
-
-    localStorage.setItem('messageHistory', pushHistoryJSON);
-  }
-
   pushToHistory(message) {
     axios.post(`${this.apiLinks}/messages`, message);
   }
 
-  renderHistory() {
-    const historyJSON = localStorage.getItem('messageHistory');
-    const history = JSON.parse(historyJSON) || [];
-    const pushToHistory = false;
-
-    history.forEach((message) => {
-      this.addMessage(message.who, message.message, pushToHistory, message.date);
-    });
-  }
-
   async renderHistoryAPI() {
     const history = await this.apiChatBot('messages');
-    const pushToHistory = false;
+    const pushToHistory = 'init';
 
     history.forEach((message) => {
       this.addMessage(message.who, message.message, pushToHistory, message.date);

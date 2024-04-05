@@ -8,25 +8,16 @@ export default [
     accordCocordence: true,
     history: true,
     matchRequired: 1,
-    who: 'all',
+    who: [1, 2, 3, 4],
     description: 'Dire bonjour aux bots',
     keyWord: ['bonjour', 'hello', 'salut'],
     action: async () => ('Bonjour !')
-  }, {
-    name: 'Bonjour chuck norris',
-    accordCocordence: true,
-    history: true,
-    matchRequired: 3,
-    who: 1,
-    description: 'Dire bonjour à Chuck Norris',
-    keyWord: ['bonjour', 'chuck', 'norris'],
-    action: async () => ('C\'est moi.. Qui dis BONJOUR !')
   }, {
     name: 'Clear',
     accordCocordence: false,
     history: false,
     matchRequired: 1,
-    who: 'all',
+    who: ['all'],
     description: 'Supprimer les messages',
     keyWord: ['clear'],
     action: async () => {
@@ -41,7 +32,7 @@ export default [
     accordCocordence: false,
     history: true,
     matchRequired: 1,
-    who: 'all',
+    who: ['all'],
     description: '',
     keyWord: [
       'connard', 'fdp', 'pute', 'salope', 'salot', 'enculer',
@@ -53,12 +44,12 @@ export default [
     ],
     action: async () => ('Les insultes ne sont pas acceptables !')
   }, {
-    name: 'ChuckNorris',
+    name: 'Chuck Norris',
     accordCocordence: true,
     history: true,
     matchRequired: 2,
-    who: 1,
-    description: 'Blague de Chuck Norris',
+    who: [1],
+    description: 'Anecdote de Chuck Norris',
     keyWord: ['chuck', 'norris'],
     action: async () => {
       const res = await axios.get(`${apiLinks}/chucknorris`);
