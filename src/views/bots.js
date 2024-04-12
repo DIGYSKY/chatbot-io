@@ -15,7 +15,7 @@ export default (bot, action) => {
         <div>
           <div class="row g-0 align-items-center">
             <div class="col-md-3">
-              <img src="${bot.img}" class="img-fluid rounded-start card-img-top" alt="...">
+              <img src="${bot.img}" class="img-fluid card-img-top" alt="...">
             </div>
             <div class="col-md-9">
               <div class="card-body m-8">

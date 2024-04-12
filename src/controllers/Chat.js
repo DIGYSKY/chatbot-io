@@ -234,15 +234,26 @@ const Chat = class {
       let displayPopup = null;
       const togglePopup = (button) => {
         const popupContent = button.nextElementSibling;
-        if (displayPopup && displayPopup !== popupContent) {
-          displayPopup.style.display = 'none';
+        if (popupContent) {
+          if (displayPopup && displayPopup !== popupContent) {
+            displayPopup.style.display = 'none';
+          }
+          popupContent.style.display = popupContent.style.display === 'block' ? 'none' : 'block';
+          displayPopup = popupContent.style.display === 'block' ? popupContent : null;
         }
-        popupContent.style.display = popupContent.style.display === 'block' ? 'none' : 'block';
-        displayPopup = popupContent.style.display === 'block' ? popupContent : null;
       };
       const buttons = document.querySelectorAll('.button-bot');
       buttons.forEach((button) => {
-        button.addEventListener('click', () => togglePopup(button));
+        button.addEventListener('click', (event) => {
+          event.stopPropagation();
+          togglePopup(button);
+        });
+      });
+      document.addEventListener('click', () => {
+        if (displayPopup) {
+          displayPopup.style.display = 'none';
+          displayPopup = null;
+        }
       });
     });
   }
