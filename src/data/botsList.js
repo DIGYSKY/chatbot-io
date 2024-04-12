@@ -14,10 +14,10 @@ export default [
   },
   {
     index: 2,
-    title: 'Bot II',
-    img: 'https://static.vecteezy.com/ti/vecteur-libre/p1/10054157-chat-bot-robot-avatar-en-cercle-forme-ronde-isole-sur-fond-blanc-illustrationle-de-stock-technologie-ai-futuriste-aide-communication-conversation-concept-dans-un-style-plat-vectoriel.jpg',
+    title: 'Movies',
+    img: 'https://m.media-amazon.com/images/I/41qLw9Xlu4L._AC_.jpg',
     description: 'description du chatbot',
-    statut: false
+    statut: true
   },
   {
     index: 3,

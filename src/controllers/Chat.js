@@ -13,6 +13,7 @@ const Chat = class {
     this.botList = botList;
     this.history = [];
     this.apiLinks = 'http://localhost:81';
+    this.wordList = [];
     this.response = '';
     this.run();
   }
@@ -76,7 +77,7 @@ const Chat = class {
           date: messageDate
         };
 
-        this.pushToHistory(messageHistory);
+        await this.pushToHistory(messageHistory);
       }
 
       messageBox.innerHTML += newMessage;
@@ -104,6 +105,7 @@ const Chat = class {
   botRespons(wordList) {
     let matchWord = [];
     const wordListSplit = wordList.split(' ');
+    this.wordList = wordListSplit;
     this.botAction.forEach((action) => {
       action.keyWord.forEach((wordB) => {
         wordListSplit.forEach((wordA) => {
@@ -209,9 +211,9 @@ const Chat = class {
     } else {
       this.botAction.forEach(async (actionList) => {
         if (matchActionName === actionList.name) {
-          const render = await actionList.action();
-          actionList.who.forEach((who) => {
-            this.addMessage(who, render, actionList.history);
+          const render = await actionList.action(this.wordList);
+          actionList.who.forEach(async (who) => {
+            await this.addMessage(who, render, actionList.history);
           });
         }
       });
@@ -258,8 +260,8 @@ const Chat = class {
     `);
   }
 
-  pushToHistory(message) {
-    axios.post(`${this.apiLinks}/messages`, message);
+  async pushToHistory(message) {
+    await axios.post(`${this.apiLinks}/messages`, message);
   }
 
   async renderHistoryAPI() {
