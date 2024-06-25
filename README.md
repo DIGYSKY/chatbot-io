@@ -1,4 +1,6 @@
-# Hello World
+# Chatbot-io
+
+Chatbot-io is a chatbot with a correlation algorithm to prevent typos and make actions flexible. The main goal is to connect the user with APIs.
 
 ## Installation
 
